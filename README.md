@@ -4,12 +4,15 @@ A lightweight status page for the EggSys website operated by Theegget Creations.
 
 **Monitored service:** https://eggsys.theegget.com
 
-## GitHub Pages setup
+## Cloudflare Worker deployment
 
-1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/ (root)**, then save.
-4. Wait for GitHub Pages to publish the site. The page should be available at the Pages URL shown in Settings.
+This repository is configured for the Cloudflare Worker named `tcstatus`, using the dashboard's `npx wrangler deploy` command.
+
+- `wrangler.jsonc` configures the Worker and serves the static files from the repository root.
+- `worker.js` provides the `GET /api/check` endpoint used by the **Check now** button.
+- `.assetsignore` prevents Worker source/configuration and GitHub workflow files from being published as public static assets.
+
+The Cloudflare Worker should use the repository root as its root directory and deploy with `npx wrangler deploy`.
 
 ## Monitoring
 
