@@ -120,7 +120,7 @@ async function manualCheck() {
 
   try {
     const response = await fetch("/api/check?t=" + Date.now(), { cache: "no-store" });
-    if (!response.ok) throw new Error("The live check endpoint returned an error.");
+    if (!response.ok) throw new Error("Endpoint returned HTTP " + response.status + ".");
     const result = await response.json();
     let saved = {};
     try {
@@ -137,8 +137,9 @@ async function manualCheck() {
     feedback.textContent = result.status === "operational"
       ? "Manual check complete: EggSys responded successfully."
       : "Manual check complete: EggSys did not respond successfully.";
-  } catch {
-    feedback.textContent = "Manual check failed. Make sure this site is deployed on Cloudflare Pages with the /api/check function.";
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : "Unknown error.";
+    feedback.textContent = "Manual check failed: " + detail + " Check the Cloudflare Pages deployment and /api/check function.";
   } finally {
     button.disabled = false;
     button.classList.remove("checking");
