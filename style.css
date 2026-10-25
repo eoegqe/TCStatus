@@ -1,29 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-:root{color-scheme:dark;--bg:#090d18;--panel:#101727;--line:#253149;--text:#f1f5ff;--muted:#9aa8bf;--accent:#8ba9ff;--green:#53d6a0;--red:#ff737d;--yellow:#f2c66d}
+:root{color-scheme:dark;--bg:#000;--panel:#080808;--line:#242424;--text:#f5f5f5;--muted:#888;--green:#6ee7a0;--red:#ff7777;--yellow:#e9c46a}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1b2b4b 0,transparent 48%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
-.topbar{max-width:900px;margin:0 auto;padding:25px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(151,169,201,.14)}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#e8edff;color:#111a31;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-1px}
-.brand strong,.brand small{display:block}.brand strong{font-size:14px;letter-spacing:.1px}.brand small{font-size:12px;color:var(--muted);margin-top:3px}
-.live-label{font-size:10px;font-weight:700;letter-spacing:1.5px;color:#a8b6cd;display:flex;align-items:center;gap:8px}
-.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px #53d6a055}
-.container{max-width:760px;margin:0 auto;padding:70px 24px 30px}
-.hero{text-align:center;margin-bottom:36px}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--accent);margin:0 0 12px}
-h1,h2,p{margin-top:0}h1,h2{font-family:'Space Grotesk',sans-serif;letter-spacing:-.7px}
-h1{font-size:clamp(34px,6vw,48px);margin-bottom:12px}.intro{font-size:15px;color:var(--muted);margin-bottom:0}
-.status-card{display:flex;align-items:center;gap:18px;padding:24px;background:linear-gradient(120deg,#122b2b,#10201f 60%,#111a2a);border:1px solid #285143;border-radius:18px;box-shadow:0 16px 55px #0002}
-.status-card.is-down{background:linear-gradient(120deg,#32191f,#21151d 60%,#111a2a);border-color:#63303a}
-.status-symbol{width:48px;height:48px;flex:0 0 48px;border-radius:15px;display:grid;place-items:center;background:#1a4437;color:var(--green);font-size:25px;font-weight:700}
-.status-copy{min-width:0;flex:1}.status-kicker{font-size:9px;letter-spacing:1.8px;color:#9eb9b1;font-weight:700;margin-bottom:5px}.status-copy h2{font-size:21px;margin-bottom:5px}.status-copy p:last-child{font-size:13px;color:#b0c5bf;margin-bottom:0;line-height:1.5}
-.status-pill{font-size:11px;font-weight:700;padding:7px 10px;border-radius:100px;background:#1c4939;color:#8ce9bd;white-space:nowrap}.status-pill.down{background:#51252c;color:#ffadb2}.status-pill.pending{background:#44391f;color:#f3d58e}
-.updated-at{text-align:center;color:var(--muted);font-size:11px;margin:14px 0 24px}
-.home-button{display:flex;justify-content:center;align-items:center;gap:10px;width:fit-content;margin:0 auto;padding:13px 19px;border:1px solid #40506c;background:#1a263c;color:#edf2ff;border-radius:11px;text-decoration:none;font-size:13px;font-weight:700;transition:background .2s,border-color .2s}
-.home-button:hover{background:#263653;border-color:#7188b5}.home-button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-footer{display:flex;justify-content:center;margin-top:58px;padding-top:18px;border-top:1px solid rgba(151,169,201,.14);color:#74829a;font-size:11px}
-@media(max-width:560px){.topbar{padding:18px}.container{padding:46px 17px 24px}.status-card{align-items:flex-start;gap:12px;padding:18px;flex-wrap:wrap}.status-symbol{width:42px;height:42px;flex-basis:42px}.status-copy{width:calc(100% - 60px);flex:1}.status-copy h2{font-size:18px}.status-pill{margin-left:54px}.home-button{width:100%}}
-
-.brand-logo{display:block;width:48px;height:48px;flex:0 0 48px;object-fit:contain;aspect-ratio:1 / 1;image-rendering:pixelated;overflow:visible}
-
-.service-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:-.2px}
+html{min-height:100%;background:#000}
+body{margin:0;background:#000;color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.topbar{max-width:860px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1d1d1d}
+.brand{display:flex;align-items:center;gap:11px}
+.brand strong,.brand small{display:block}
+.brand strong{font-size:14px;font-weight:600}
+.brand small{font-size:12px;color:var(--muted);margin-top:3px}
+.brand-logo{display:block;width:36px;height:36px;flex:0 0 36px;object-fit:contain;aspect-ratio:1/1;image-rendering:pixelated}
+.live-label{font-size:10px;font-weight:600;letter-spacing:1px;color:#aaa;display:flex;align-items:center;gap:8px}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%}
+.container{max-width:680px;margin:0 auto;padding:64px 24px 28px}
+.hero{margin-bottom:32px}
+h1,h2,p{margin-top:0}
+h1{font-size:32px;font-weight:600;letter-spacing:-1px;margin-bottom:8px}
+.intro{font-size:14px;color:var(--muted);margin-bottom:0;line-height:1.5}
+.status-card{display:flex;align-items:center;gap:16px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;border-radius:0;box-shadow:none}
+.status-card.is-down{background:transparent;border-color:var(--line)}
+.status-symbol{width:32px;height:32px;flex:0 0 32px;border-radius:50%;display:grid;place-items:center;background:#102017;color:var(--green);font-size:18px;font-weight:600}
+.status-copy{min-width:0;flex:1}
+.status-kicker{font-size:9px;letter-spacing:1.2px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.status-copy h2{font-size:17px;font-weight:600;letter-spacing:-.2px;margin-bottom:4px}
+.status-copy p:last-child{font-size:12px;color:var(--muted);margin-bottom:0;line-height:1.5}
+.status-pill{font-size:11px;font-weight:600;padding:5px 8px;border:1px solid #254332;border-radius:4px;background:transparent;color:var(--green);white-space:nowrap}
+.status-pill.down{border-color:#552929;color:var(--red)}
+.status-pill.pending{border-color:#4b4020;color:var(--yellow)}
+.updated-at{text-align:left;color:#777;font-size:11px;margin:10px 0 24px}
+.home-button{display:inline-flex;justify-content:center;align-items:center;gap:8px;margin-top:12px;padding:9px 0;color:#ddd;text-decoration:none;font-size:12px;font-weight:600;border:0;background:transparent}
+.home-button:hover{color:#fff}
+.home-button:focus-visible{outline:1px solid #aaa;outline-offset:4px}
+footer{display:flex;justify-content:flex-start;margin-top:46px;padding-top:16px;border-top:1px solid #1d1d1d;color:#666;font-size:11px}
+@media(max-width:560px){.topbar{padding:17px}.container{padding:42px 18px 24px}.status-card{gap:12px;padding:17px 0}.status-copy h2{font-size:16px}.status-pill{font-size:10px}.home-button{width:100%;border:1px solid #292929;padding:11px 12px;margin-top:8px}}
