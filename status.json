@@ -1,8 +1,9 @@
 {
   "service": "EggSys website",
   "url": "https://eggsys.theegget.com",
-  "status": "pending",
-  "last_checked": null,
-  "last_change": null,
-  "incidents": []
+  "status": "operational",
+  "last_checked": "2026-10-25T13:17:59Z",
+  "last_change": "2026-10-25T13:17:59Z",
+  "incidents": [],
+  "http_status": 200
 }
