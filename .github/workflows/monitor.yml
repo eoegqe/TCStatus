@@ -24,7 +24,6 @@ jobs:
         run: |
           python3 <<'PY'
           import json
-          import os
           import urllib.error
           import urllib.request
           from datetime import datetime, timezone
@@ -56,11 +55,10 @@ jobs:
           previous = data.get("status", "pending")
           data["service"] = "EggSys website"
           data["url"] = url
-          data["last_checked"] = now
-          data["http_status"] = http_status
-
           if previous != new_status:
               data["status"] = new_status
+              data["last_checked"] = now
+              data["http_status"] = http_status
               data["last_change"] = now
               if previous not in ("pending", "unknown", None):
                   if new_status == "operational":
