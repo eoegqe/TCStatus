@@ -32,8 +32,12 @@
         <h2 id="status-title">Loading status…</h2>
         <p id="status-description">Fetching the latest monitoring result.</p>
       </div>
-      <span class="status-pill pending" id="status-pill">Checking</span>
+      <div class="status-actions">
+        <span class="status-pill pending" id="status-pill">Checking</span>
+        <button class="check-button" id="manual-check" type="button"><span aria-hidden="true">↻</span> Check now</button>
+      </div>
     </section>
+    <p class="check-feedback" id="check-feedback" role="status" aria-live="polite"></p>
 
     <section class="service-section">
       <div class="section-heading">
