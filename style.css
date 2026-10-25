@@ -25,3 +25,5 @@ footer{display:flex;justify-content:center;margin-top:58px;padding-top:18px;bord
 @media(max-width:560px){.topbar{padding:18px}.container{padding:46px 17px 24px}.status-card{align-items:flex-start;gap:12px;padding:18px;flex-wrap:wrap}.status-symbol{width:42px;height:42px;flex-basis:42px}.status-copy{width:calc(100% - 60px);flex:1}.status-copy h2{font-size:18px}.status-pill{margin-left:54px}.home-button{width:100%}}
 
 .brand-logo{display:block;width:48px;height:48px;flex:0 0 48px;object-fit:contain;aspect-ratio:1 / 1;image-rendering:pixelated;overflow:visible}
+
+.service-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:-.2px}
