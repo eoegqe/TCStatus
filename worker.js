@@ -1,9 +1,9 @@
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
 
     if (url.pathname !== "/api/check") {
-      return Response.json({ error: "Not found" }, { status: 404 });
+      return env.ASSETS.fetch(request);
     }
 
     if (request.method !== "GET") {
