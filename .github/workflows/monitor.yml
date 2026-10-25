@@ -1,0 +1,99 @@
+name: Monitor EggSys website
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eggsys-website-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check EggSys and record status changes
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+
+          path = "status.json"
+          with open(path, "r", encoding="utf-8") as file:
+              data = json.load(file)
+
+          now = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+          url = "https://eggsys.theegget.com"
+          request = urllib.request.Request(
+              url,
+              headers={"User-Agent": "TCStatus-Monitor/1.0"},
+              method="GET"
+          )
+
+          http_status = None
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  http_status = response.status
+                  new_status = "operational" if 200 <= response.status < 400 else "outage"
+          except urllib.error.HTTPError as error:
+              http_status = error.code
+              new_status = "outage"
+          except Exception as error:
+              print(f"Monitor request failed: {error}")
+              new_status = "outage"
+
+          previous = data.get("status", "pending")
+          data["service"] = "EggSys website"
+          data["url"] = url
+          data["last_checked"] = now
+          data["http_status"] = http_status
+
+          if previous != new_status:
+              data["status"] = new_status
+              data["last_change"] = now
+              if previous not in ("pending", "unknown", None):
+                  if new_status == "operational":
+                      title = "EggSys website recovered"
+                      message = "The website is responding successfully again."
+                  else:
+                      title = "EggSys website outage"
+                      message = "The monitor could not get a successful response from the website."
+                  incidents = data.get("incidents", [])
+                  incidents.append({
+                      "time": now,
+                      "status": new_status,
+                      "title": title,
+                      "message": message
+                  })
+                  data["incidents"] = incidents[-50:]
+              print(f"Status changed: {previous} -> {new_status}")
+          else:
+              print(f"Status unchanged: {new_status}")
+
+          with open(path, "w", encoding="utf-8") as file:
+              json.dump(data, file, indent=2)
+              file.write("\n")
+          PY
+
+      - name: Commit status changes
+        run: |
+          if git diff --quiet -- status.json; then
+            echo "No status change to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add status.json
+          git commit -m "Update EggSys service status"
+          git push
