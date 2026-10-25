@@ -1,5 +1,3 @@
-const STATUS_FILE = "./status.json";
-
 const statusUI = {
   operational: {
     title: "All systems operational",
@@ -23,10 +21,10 @@ const statusUI = {
     className: "down"
   },
   pending: {
-    title: "Waiting for first check",
-    description: "The monitor has not recorded its first result yet.",
+    title: "Checking website…",
+    description: "Checking the EggSys website now.",
     symbol: "…",
-    pill: "Pending",
+    pill: "Checking",
     className: "pending"
   }
 };
@@ -53,23 +51,27 @@ function renderStatus(data) {
   document.getElementById("status-symbol").style.background = isDown ? "#51252c" : state.className === "pending" ? "#44391f" : "#1a4437";
   document.getElementById("status-symbol").style.color = isDown ? "var(--red)" : state.className === "pending" ? "var(--yellow)" : "var(--green)";
 
-  const updated = data.last_checked || data.last_change;
-  document.getElementById("updated-at").textContent = updated
-    ? "Last checked: " + formatDate(updated)
-    : "Waiting for the first monitoring result";
+  document.getElementById("updated-at").textContent = data.checked_at
+    ? "Last checked: " + formatDate(data.checked_at)
+    : "Checking now…";
 }
 
-async function loadStatus() {
+async function checkWebsite() {
+  renderStatus({ status: "pending" });
+
   try {
-    const response = await fetch(STATUS_FILE + "?t=" + Date.now(), { cache: "no-store" });
-    if (!response.ok) throw new Error("Status file unavailable");
+    const response = await fetch("/api/check?t=" + Date.now(), { cache: "no-store" });
+    if (!response.ok) throw new Error("Check endpoint returned HTTP " + response.status);
     renderStatus(await response.json());
   } catch {
-    renderStatus({ status: "pending", last_checked: null });
+    renderStatus({
+      status: "outage",
+      checked_at: new Date().toISOString()
+    });
     document.getElementById("status-description").textContent =
-      "Status data is not available yet. The monitor may still be setting up.";
+      "The status check could not be completed. Please try again later.";
   }
 }
 
-loadStatus();
-setInterval(loadStatus, 60000);
+checkWebsite();
+setInterval(checkWebsite, 60000);
