@@ -3,28 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
-  <meta name="description" content="Live service status for EggSys by Theegget Creations.">
-  <title>EggSys Status — Theegget Creations</title>
+  <meta name="theme-color" content="#090d18">
+  <meta name="description" content="EggSys website status from Theegget Creations.">
+  <title>TCStatus — Theegget Creations</title>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="./" aria-label="EggSys Status home">
+    <div class="brand" aria-label="Theegget Creations">
       <span class="brand-mark">TC</span>
       <span><strong>Theegget Creations</strong><small>Service status</small></span>
-    </a>
+    </div>
     <span class="live-label"><span class="live-dot"></span> LIVE STATUS</span>
   </header>
-
   <main class="container">
     <section class="hero">
       <p class="eyebrow">EGGSYS · SERVICE HEALTH</p>
-      <h1>EggSys Status</h1>
-      <p class="intro">Status and incident updates for the EggSys website.</p>
+      <h1>TCStatus</h1>
+      <p class="intro">Current status of the EggSys website.</p>
     </section>
-
     <section class="status-card" aria-live="polite">
       <div class="status-symbol" id="status-symbol" aria-hidden="true">…</div>
       <div class="status-copy">
@@ -32,39 +30,11 @@
         <h2 id="status-title">Loading status…</h2>
         <p id="status-description">Fetching the latest monitoring result.</p>
       </div>
-      <div class="status-actions">
-        <span class="status-pill pending" id="status-pill">Checking</span>
-        <button class="check-button" id="manual-check" type="button"><span aria-hidden="true">↻</span> Check now</button>
-      </div>
+      <span class="status-pill pending" id="status-pill">Checking</span>
     </section>
-    <p class="check-feedback" id="check-feedback" role="status" aria-live="polite"></p>
-
-    <section class="service-section">
-      <div class="section-heading">
-        <div><p class="eyebrow">MONITORED SERVICE</p><h2>EggSys website</h2></div>
-        <span class="service-tag">Website</span>
-      </div>
-      <a class="service-row" href="https://eggsys.theegget.com" target="_blank" rel="noopener noreferrer">
-        <span class="service-icon" aria-hidden="true">↗</span>
-        <span class="service-details"><strong>eggsys.theegget.com</strong><small>Primary EggSys web service</small></span>
-        <span class="service-link">Open site <span aria-hidden="true">→</span></span>
-      </a>
-      <p class="monitor-note"><span class="tiny-dot"></span> Automated checks run approximately every 5 minutes.</p>
-    </section>
-
-    <section class="incident-section">
-      <div class="section-heading">
-        <div><p class="eyebrow">UPDATES</p><h2>Incident history</h2></div>
-      </div>
-      <div id="incident-list" class="incident-list">
-        <div class="empty-state">Loading incident history…</div>
-      </div>
-    </section>
-
-    <footer>
-      <span>EggSys is a product of Theegget Creations.</span>
-      <span id="updated-at">Loading latest update…</span>
-    </footer>
+    <p class="updated-at" id="updated-at">Loading latest update…</p>
+    <a class="home-button" href="https://theegget.com" target="_blank" rel="noopener noreferrer">Go to Theegget.com <span aria-hidden="true">↗</span></a>
+    <footer><span>Powered by Theegget Creations</span></footer>
   </main>
 </body>
 </html>
