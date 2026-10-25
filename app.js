@@ -110,5 +110,42 @@ async function loadStatus() {
   }
 }
 
+async function manualCheck() {
+  const button = document.getElementById("manual-check");
+  const feedback = document.getElementById("check-feedback");
+  button.disabled = true;
+  button.classList.add("checking");
+  button.innerHTML = '<span aria-hidden="true">↻</span> Checking…';
+  feedback.textContent = "Checking the EggSys website directly…";
+
+  try {
+    const response = await fetch("/api/check?t=" + Date.now(), { cache: "no-store" });
+    if (!response.ok) throw new Error("The live check endpoint returned an error.");
+    const result = await response.json();
+    let saved = {};
+    try {
+      const savedResponse = await fetch(STATUS_FILE + "?t=" + Date.now(), { cache: "no-store" });
+      if (savedResponse.ok) saved = await savedResponse.json();
+    } catch {}
+    renderStatus({
+      ...saved,
+      status: result.status,
+      last_checked: result.checked_at,
+      http_status: result.http_status,
+      incidents: saved.incidents || []
+    });
+    feedback.textContent = result.status === "operational"
+      ? "Manual check complete: EggSys responded successfully."
+      : "Manual check complete: EggSys did not respond successfully.";
+  } catch {
+    feedback.textContent = "Manual check failed. Make sure this site is deployed on Cloudflare Pages with the /api/check function.";
+  } finally {
+    button.disabled = false;
+    button.classList.remove("checking");
+    button.innerHTML = '<span aria-hidden="true">↻</span> Check now';
+  }
+}
+
+document.getElementById("manual-check").addEventListener("click", manualCheck);
 loadStatus();
 setInterval(loadStatus, 60000);
