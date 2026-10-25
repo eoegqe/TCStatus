@@ -1,10 +1,13 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const targets = {
+      "/api/check": { url: "https://eggsys.theegget.com", service: "EggSys website" },
+      "/api/check-home": { url: "https://creations.theegget.com", service: "TC Home" }
+    };
+    const target = targets[url.pathname];
 
-    if (url.pathname !== "/api/check") {
-      return env.ASSETS.fetch(request);
-    }
+    if (!target) return env.ASSETS.fetch(request);
 
     if (request.method !== "GET") {
       return new Response("Method not allowed", {
@@ -18,7 +21,7 @@ export default {
     const timeout = setTimeout(() => controller.abort(), 15000);
 
     try {
-      const response = await fetch("https://eggsys.theegget.com", {
+      const response = await fetch(target.url, {
         method: "GET",
         headers: { "User-Agent": "TCStatus-Manual-Check/1.0" },
         signal: controller.signal,
@@ -26,22 +29,18 @@ export default {
       });
 
       return Response.json({
-        service: "EggSys website",
+        service: target.service,
         status: response.status >= 200 && response.status < 400 ? "operational" : "outage",
         http_status: response.status,
         checked_at: checkedAt
-      }, {
-        headers: { "Cache-Control": "no-store" }
-      });
+      }, { headers: { "Cache-Control": "no-store" } });
     } catch {
       return Response.json({
-        service: "EggSys website",
+        service: target.service,
         status: "outage",
         http_status: null,
         checked_at: checkedAt
-      }, {
-        headers: { "Cache-Control": "no-store" }
-      });
+      }, { headers: { "Cache-Control": "no-store" } });
     } finally {
       clearTimeout(timeout);
     }
