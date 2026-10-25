@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schema.wrangler.com/config.json",
+  "name": "tcstatus",
+  "main": "./worker.js",
+  "compatibility_date": "2026-10-25",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  }
+}
