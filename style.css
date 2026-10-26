@@ -31,3 +31,20 @@ h1{font-size:32px;font-weight:600;letter-spacing:-1px;margin-bottom:8px}
 .home-button:focus-visible{outline:1px solid #aaa;outline-offset:4px}
 footer{display:flex;justify-content:flex-start;margin-top:46px;padding-top:16px;border-top:1px solid #1d1d1d;color:#666;font-size:11px}
 @media(max-width:560px){.topbar{padding:17px}.container{padding:42px 18px 24px}.status-card{gap:12px;padding:17px 0}.status-copy h2{font-size:16px}.status-pill{font-size:10px}.home-button{width:100%;border:1px solid #292929;padding:11px 12px;margin-top:8px}}
+.api-group{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:4px}
+.api-group-summary{display:flex;align-items:center;gap:16px;padding:20px 0;cursor:pointer;list-style:none}
+.api-group-summary::-webkit-details-marker{display:none}
+.api-group-summary::marker{content:""}
+.api-group-symbol{font-size:0;position:relative}
+.api-group-symbol::after{content:"+";font-size:20px}
+.api-group[open] .api-group-symbol::after{content:"−"}
+.api-group-title{display:block;font-size:17px;font-weight:600;letter-spacing:-.2px;margin-bottom:4px}
+.api-group-description{display:block;font-size:12px;color:var(--muted);line-height:1.5}
+.api-expand-label{font-size:11px;color:#aaa;white-space:nowrap}
+.api-group[open] .api-expand-label{font-size:0}
+.api-group[open] .api-expand-label::after{content:"Collapse";font-size:11px}
+.api-group-content{padding:0 0 4px 20px;border-left:1px solid #292929;margin:0 0 12px 16px}
+.api-child-card{border-top:1px solid #1c1c1c;padding:16px 0 10px}
+.api-child-card:first-child{border-top:0}
+.api-child-updated{margin:0 0 10px}
+@media(max-width:560px){.api-group-summary{gap:12px;padding:17px 0}.api-group-content{padding-left:12px;margin-left:12px}.api-group-summary .status-copy{flex:1}.api-expand-label{font-size:10px}}
