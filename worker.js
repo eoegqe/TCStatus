@@ -3,7 +3,9 @@ export default {
     const url = new URL(request.url);
     const targets = {
       "/api/check": { url: "https://eggsys.theegget.com", service: "EggSys website" },
-      "/api/check-home": { url: "https://creations.theegget.com", service: "TC Home" }
+      "/api/check-home": { url: "https://creations.theegget.com", service: "TC Home" },
+      "/api/check-tc-api": { url: "https://tc-api.theegget.com/status", service: "API for TC" },
+      "/api/check-es-api": { url: "https://es-api.theegget.com/", service: "API for EggetSystem" }
     };
     const target = targets[url.pathname];
 
