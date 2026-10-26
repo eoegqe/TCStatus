@@ -20,7 +20,8 @@ function renderStatus(data, prefix = "") {
   const pill = document.getElementById(prefix + "status-pill");
   pill.textContent = state.pill;
   pill.className = "status-pill " + (state.className === "down" ? "down" : state.className === "pending" ? "pending" : "");
-  const card = document.getElementById(prefix ? "home-status-card" : "status-card") || document.querySelector(prefix ? "#home-status-card" : ".status-card");
+  const cardIds = { "": "status-card", "home-": "home-status-card", "tc-api-": "tc-api-status-card", "es-api-": "es-api-status-card" };
+  const card = document.getElementById(cardIds[prefix] || "status-card");
   const isDown = data.status === "outage" || data.status === "degraded";
   card.classList.toggle("is-down", isDown);
   const symbol = document.getElementById(prefix + "status-symbol");
@@ -43,5 +44,9 @@ async function checkWebsite(endpoint, prefix = "") {
 
 checkWebsite("/api/check");
 checkWebsite("/api/check-home", "home-");
+checkWebsite("/api/check-tc-api", "tc-api-");
+checkWebsite("/api/check-es-api", "es-api-");
 setInterval(() => checkWebsite("/api/check"), 60000);
 setInterval(() => checkWebsite("/api/check-home", "home-"), 60000);
+setInterval(() => checkWebsite("/api/check-tc-api", "tc-api-"), 60000);
+setInterval(() => checkWebsite("/api/check-es-api", "es-api-"), 60000);
