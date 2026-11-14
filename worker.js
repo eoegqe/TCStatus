@@ -2,7 +2,6 @@ const targets = {
   homepage: { url: "https://theegget.com", service: "TC Homepage" },
   creations: { url: "https://creations.theegget.com", service: "Creations" },
   accounts: { url: "https://accounts.theegget.com", service: "TC Accounts" },
-  admin: { url: "https://admin.theegget.com", service: "TC Admin" },
   social: { url: "https://social.theegget.com", service: "Theegget's Social" },
   sites: { url: "https://sites.theegget.com", service: "TC Sites" },
   dev: { url: "https://dev.theegget.com", service: "TC Dev" },
