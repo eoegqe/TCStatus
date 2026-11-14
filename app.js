@@ -2,7 +2,6 @@ const services = [
   { id: "homepage", name: "TC Homepage", url: "https://theegget.com", description: "The main Theegget Creations landing page." },
   { id: "creations", name: "Creations", url: "https://creations.theegget.com", description: "The Theegget Creations hub." },
   { id: "accounts", name: "TC Accounts", url: "https://accounts.theegget.com", description: "TC account and sign-in services." },
-  { id: "admin", name: "TC Admin", url: "https://admin.theegget.com", description: "The TC administration dashboard." },
   { id: "social", name: "Theegget's Social", url: "https://social.theegget.com", description: "The TC social platform." },
   { id: "sites", name: "TC Sites", url: "https://sites.theegget.com", description: "TC website management." },
   { id: "dev", name: "TC Dev", url: "https://dev.theegget.com", description: "The TC developer site." },
