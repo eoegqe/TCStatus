@@ -48,3 +48,6 @@ footer{display:flex;justify-content:flex-start;margin-top:46px;padding-top:16px;
 .api-child-card:first-child{border-top:0}
 .api-child-updated{margin:0 0 10px}
 @media(max-width:560px){.api-group-summary{gap:12px;padding:17px 0}.api-group-content{padding-left:12px;margin-left:12px}.api-group-summary .status-copy{flex:1}.api-expand-label{font-size:10px}}
+
+.service-link{display:inline-block;margin-top:8px;color:#aaa;font-size:11px;text-decoration:none;overflow-wrap:anywhere}
+.service-link:hover{color:#fff;text-decoration:underline}
