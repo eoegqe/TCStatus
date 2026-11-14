@@ -1,13 +1,21 @@
+const targets = {
+  homepage: { url: "https://theegget.com", service: "TC Homepage" },
+  creations: { url: "https://creations.theegget.com", service: "Creations" },
+  accounts: { url: "https://accounts.theegget.com", service: "TC Accounts" },
+  admin: { url: "https://admin.theegget.com", service: "TC Admin" },
+  social: { url: "https://social.theegget.com", service: "Theegget's Social" },
+  sites: { url: "https://sites.theegget.com", service: "TC Sites" },
+  dev: { url: "https://dev.theegget.com", service: "TC Dev" },
+  eggsys: { url: "https://eggsys.theegget.com", service: "EggSys" },
+  "tc-api": { url: "https://tc-api.theegget.com/status", service: "API for TC" },
+  "es-api": { url: "https://es-api.theegget.com/", service: "API for EggetSystem" }
+};
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const targets = {
-      "/api/check": { url: "https://eggsys.theegget.com", service: "EggSys website" },
-      "/api/check-home": { url: "https://creations.theegget.com", service: "TC Home" },
-      "/api/check-tc-api": { url: "https://tc-api.theegget.com/status", service: "API for TC" },
-      "/api/check-es-api": { url: "https://es-api.theegget.com/", service: "API for EggetSystem" }
-    };
-    const target = targets[url.pathname];
+    const match = url.pathname.match(/^\/api\/check\/([a-z-]+)$/);
+    const target = match ? targets[match[1]] : null;
 
     if (!target) return env.ASSETS.fetch(request);
 
