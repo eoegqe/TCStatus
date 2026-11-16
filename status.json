@@ -1,9 +1,16 @@
 {
   "service": "EggSys website",
   "url": "https://eggsys.theegget.com",
-  "status": "operational",
-  "last_checked": "2026-10-25T13:17:59Z",
-  "last_change": "2026-10-25T13:17:59Z",
-  "incidents": [],
-  "http_status": 200
+  "status": "outage",
+  "last_checked": "2026-11-16T21:14:00Z",
+  "last_change": "2026-11-16T21:14:00Z",
+  "incidents": [
+    {
+      "time": "2026-11-16T21:14:00Z",
+      "status": "outage",
+      "title": "EggSys website outage",
+      "message": "The monitor could not get a successful response from the website."
+    }
+  ],
+  "http_status": 503
 }
