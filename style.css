@@ -51,3 +51,11 @@ footer{display:flex;justify-content:flex-start;margin-top:46px;padding-top:16px;
 
 .service-link{display:inline-block;margin-top:8px;color:#aaa;font-size:11px;text-decoration:none;overflow-wrap:anywhere}
 .service-link:hover{color:#fff;text-decoration:underline}
+
+.service-name{font-size:16px;font-weight:600;letter-spacing:-.2px;margin:0 0 8px}
+.service-status-line{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.service-link{margin:0;color:#aaa;font-size:12px;text-decoration:none;overflow-wrap:anywhere}
+.service-link:hover{color:#fff;text-decoration:underline}
+.status-pill.maintenance{border-color:#49375f;color:#c7a8ff}
+.status-card.is-maintenance{border-color:#49375f}
+@media(max-width:560px){.service-status-line{gap:8px}.service-link{font-size:11px}}
