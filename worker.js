@@ -26,6 +26,22 @@ export default {
     }
 
     const checkedAt = new Date().toISOString();
+    let maintenance = false;
+    try {
+      const setting = await env.TC.prepare("SELECT maintenance FROM server_settings WHERE id = 1").first();
+      maintenance = Number(setting?.maintenance) === 1;
+    } catch (error) {
+      console.error("Could not read shared maintenance setting:", error);
+    }
+    if (maintenance) {
+      return Response.json({
+        service: target.service,
+        status: "maintenance",
+        maintenance: true,
+        http_status: null,
+        checked_at: checkedAt
+      }, { headers: { "Cache-Control": "no-store" } });
+    }
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15000);
 
