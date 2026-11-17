@@ -1,13 +1,13 @@
 const services = [
-  { id: "homepage", name: "TC Homepage", url: "https://theegget.com", description: "The main Theegget Creations landing page." },
-  { id: "creations", name: "Creations", url: "https://creations.theegget.com", description: "The Theegget Creations hub." },
-  { id: "accounts", name: "TC Accounts", url: "https://accounts.theegget.com", description: "TC account and sign-in services." },
-  { id: "social", name: "Theegget's Social", url: "https://social.theegget.com", description: "The TC social platform." },
-  { id: "sites", name: "TC Sites", url: "https://sites.theegget.com", description: "TC website management." },
-  { id: "dev", name: "TC Dev", url: "https://dev.theegget.com", description: "The TC developer site." },
-  { id: "eggsys", name: "EggSys", url: "https://eggsys.theegget.com", description: "The EggetSystem website." },
-  { id: "tc-api", name: "API for TC", url: "https://tc-api.theegget.com/status", description: "Theegget Creations API." },
-  { id: "es-api", name: "API for EggetSystem", url: "https://es-api.theegget.com/", description: "EggetSystem API." }
+  { id: "homepage", name: "TC Homepage", host: "theegget.com", url: "https://theegget.com", description: "The main Theegget Creations landing page." },
+  { id: "creations", name: "Creations", host: "creations.theegget.com", url: "https://creations.theegget.com", description: "The Theegget Creations hub." },
+  { id: "accounts", name: "TC Accounts", host: "accounts.theegget.com", url: "https://accounts.theegget.com", description: "TC account and sign-in services." },
+  { id: "social", name: "Theegget's Social", host: "social.theegget.com", url: "https://social.theegget.com", description: "The TC social platform." },
+  { id: "sites", name: "TC Sites", host: "sites.theegget.com", url: "https://sites.theegget.com", description: "TC website management." },
+  { id: "dev", name: "TC Dev", host: "dev.theegget.com", url: "https://dev.theegget.com", description: "The TC developer site." },
+  { id: "eggsys", name: "EggSys", host: "eggsys.theegget.com", url: "https://eggsys.theegget.com", description: "The EggetSystem website." },
+  { id: "tc-api", name: "API for TC", host: "tc-api.theegget.com", url: "https://tc-api.theegget.com/status", description: "Theegget Creations API." },
+  { id: "es-api", name: "API for EggetSystem", host: "es-api.theegget.com", url: "https://es-api.theegget.com/", description: "EggetSystem API." }
 ];
 
 const statusUI = {
@@ -31,15 +31,13 @@ function createServiceCard(service) {
   card.id = service.id + "-card";
   card.setAttribute("aria-live", "polite");
   card.innerHTML = `
-    <div class="status-symbol" id="${service.id}-symbol" aria-hidden="true">…</div>
     <div class="status-copy">
-      <p class="service-name"></p>
-      <p class="status-kicker">CURRENT STATUS</p>
-      <h2 id="${service.id}-title">Checking…</h2>
-      <p id="${service.id}-description"></p>
-      <a class="service-link" href="${service.url}" target="_blank" rel="noopener noreferrer">${service.url.replace(/^https:\/\//, "")} ↗</a>
+      <h2 class="service-name"></h2>
+      <div class="service-status-line">
+        <a class="service-link" href="${service.url}" target="_blank" rel="noopener noreferrer">${service.host}</a>
+        <span class="status-pill pending" id="${service.id}-pill">Checking</span>
+      </div>
     </div>
-    <span class="status-pill pending" id="${service.id}-pill">Checking</span>
   `;
   card.querySelector(".service-name").textContent = service.name;
   document.getElementById("services-list").append(card);
@@ -52,16 +50,10 @@ function createServiceCard(service) {
 
 function renderStatus(service, data) {
   const state = statusUI[data.maintenance ? "maintenance" : data.status] || statusUI.pending;
-  const card = document.getElementById(service.id + "-card");
-  const symbol = document.getElementById(service.id + "-symbol");
-  symbol.textContent = state.symbol;
-  symbol.style.background = state.className === "down" ? "#51252c" : state.className === "pending" ? "#44391f" : state.className === "maintenance" ? "#393044" : "#1a4437";
-  symbol.style.color = state.className === "down" ? "var(--red)" : state.className === "pending" ? "var(--yellow)" : state.className === "maintenance" ? "#c7a8ff" : "var(--green)";
-  document.getElementById(service.id + "-title").textContent = state.title;
-  document.getElementById(service.id + "-description").textContent = data.maintenance ? state.description : data.status === "operational" ? service.description : state.description;
   const pill = document.getElementById(service.id + "-pill");
   pill.textContent = state.pill;
   pill.className = "status-pill " + (state.className === "down" ? "down" : state.className === "pending" ? "pending" : state.className === "maintenance" ? "maintenance" : "");
+  const card = document.getElementById(service.id + "-card");
   card.classList.toggle("is-down", state.className === "down");
   card.classList.toggle("is-maintenance", state.className === "maintenance");
   document.getElementById(service.id + "-updated").textContent = data.checked_at ? "Last checked: " + formatDate(data.checked_at) : "Checking now…";
@@ -75,7 +67,6 @@ async function checkService(service) {
     renderStatus(service, await response.json());
   } catch {
     renderStatus(service, { status: "outage", checked_at: new Date().toISOString() });
-    document.getElementById(service.id + "-description").textContent = "The status check could not be completed.";
   }
 }
 
