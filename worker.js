@@ -26,13 +26,19 @@ export default {
     }
 
     const checkedAt = new Date().toISOString();
-    let maintenance = false;
+    let globalMaintenance = false;
+    let serviceMaintenance = false;
     try {
       const setting = await env.TC.prepare("SELECT maintenance FROM server_settings WHERE id = 1").first();
-      maintenance = Number(setting?.maintenance) === 1;
+      globalMaintenance = Number(setting?.maintenance) === 1;
+      const serviceSetting = await env.TC.prepare(
+        "SELECT maintenance FROM service_maintenance WHERE service_id = ?"
+      ).bind(match[1]).first();
+      serviceMaintenance = Number(serviceSetting?.maintenance) === 1;
     } catch (error) {
-      console.error("Could not read shared maintenance setting:", error);
+      console.error("Could not read maintenance settings:", error);
     }
+    const maintenance = globalMaintenance || serviceMaintenance;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15000);
 
@@ -48,6 +54,8 @@ export default {
         service: target.service,
         status: response.status >= 200 && response.status < 400 ? "operational" : "outage",
         maintenance,
+        global_maintenance: globalMaintenance,
+        service_maintenance: serviceMaintenance,
         http_status: response.status,
         checked_at: checkedAt
       }, { headers: { "Cache-Control": "no-store" } });
@@ -56,6 +64,8 @@ export default {
         service: target.service,
         status: "outage",
         maintenance,
+        global_maintenance: globalMaintenance,
+        service_maintenance: serviceMaintenance,
         http_status: null,
         checked_at: checkedAt
       }, { headers: { "Cache-Control": "no-store" } });
