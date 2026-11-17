@@ -14,7 +14,8 @@ const statusUI = {
   operational: { title: "Operational", description: "The service responded successfully.", symbol: "✓", pill: "Operational", className: "up" },
   degraded: { title: "Degraded", description: "The service responded with an unexpected result.", symbol: "!", pill: "Degraded", className: "down" },
   outage: { title: "Service unavailable", description: "The service did not respond successfully to the latest check.", symbol: "×", pill: "Outage", className: "down" },
-  pending: { title: "Checking…", description: "Checking the service now.", symbol: "…", pill: "Checking", className: "pending" }
+  pending: { title: "Checking…", description: "Checking the service now.", symbol: "…", pill: "Checking", className: "pending" },
+  maintenance: { title: "Maintenance", description: "This service is currently under scheduled or server-wide maintenance.", symbol: "⚙", pill: "Maintenance", className: "maintenance" }
 };
 
 function formatDate(value) {
@@ -50,18 +51,19 @@ function createServiceCard(service) {
 }
 
 function renderStatus(service, data) {
-  const state = statusUI[data.status] || statusUI.pending;
+  const state = statusUI[data.maintenance ? "maintenance" : data.status] || statusUI.pending;
   const card = document.getElementById(service.id + "-card");
   const symbol = document.getElementById(service.id + "-symbol");
   symbol.textContent = state.symbol;
-  symbol.style.background = state.className === "down" ? "#51252c" : state.className === "pending" ? "#44391f" : "#1a4437";
-  symbol.style.color = state.className === "down" ? "var(--red)" : state.className === "pending" ? "var(--yellow)" : "var(--green)";
+  symbol.style.background = state.className === "down" ? "#51252c" : state.className === "pending" ? "#44391f" : state.className === "maintenance" ? "#393044" : "#1a4437";
+  symbol.style.color = state.className === "down" ? "var(--red)" : state.className === "pending" ? "var(--yellow)" : state.className === "maintenance" ? "#c7a8ff" : "var(--green)";
   document.getElementById(service.id + "-title").textContent = state.title;
-  document.getElementById(service.id + "-description").textContent = data.status === "operational" ? service.description : state.description;
+  document.getElementById(service.id + "-description").textContent = data.maintenance ? state.description : data.status === "operational" ? service.description : state.description;
   const pill = document.getElementById(service.id + "-pill");
   pill.textContent = state.pill;
-  pill.className = "status-pill " + (state.className === "down" ? "down" : state.className === "pending" ? "pending" : "");
+  pill.className = "status-pill " + (state.className === "down" ? "down" : state.className === "pending" ? "pending" : state.className === "maintenance" ? "maintenance" : "");
   card.classList.toggle("is-down", state.className === "down");
+  card.classList.toggle("is-maintenance", state.className === "maintenance");
   document.getElementById(service.id + "-updated").textContent = data.checked_at ? "Last checked: " + formatDate(data.checked_at) : "Checking now…";
 }
 
