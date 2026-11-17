@@ -33,15 +33,6 @@ export default {
     } catch (error) {
       console.error("Could not read shared maintenance setting:", error);
     }
-    if (maintenance) {
-      return Response.json({
-        service: target.service,
-        status: "maintenance",
-        maintenance: true,
-        http_status: null,
-        checked_at: checkedAt
-      }, { headers: { "Cache-Control": "no-store" } });
-    }
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15000);
 
@@ -56,6 +47,7 @@ export default {
       return Response.json({
         service: target.service,
         status: response.status >= 200 && response.status < 400 ? "operational" : "outage",
+        maintenance,
         http_status: response.status,
         checked_at: checkedAt
       }, { headers: { "Cache-Control": "no-store" } });
@@ -63,6 +55,7 @@ export default {
       return Response.json({
         service: target.service,
         status: "outage",
+        maintenance,
         http_status: null,
         checked_at: checkedAt
       }, { headers: { "Cache-Control": "no-store" } });
